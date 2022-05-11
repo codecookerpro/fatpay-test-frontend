@@ -1,6 +1,6 @@
 ## Bridge Protocol Frontend
 
-This is a [Next.js + TypeScript] project for DeFIRE Reputation.
+This is a [Next.js + TypeScript] project for FatToken TEST.
 
 ## Getting Started
 

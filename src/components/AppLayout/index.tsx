@@ -6,8 +6,8 @@ const AppLayout: NextPage = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>DeFIRE</title>
-        <meta name="description" content="DeFIRE Reputation page" />
+        <title>FatToken TEST</title>
+        <meta name="description" content="FatToken Test UI" />
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main className="flex-grow">{children}</main>

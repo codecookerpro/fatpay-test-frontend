@@ -1,5 +1,7 @@
 import '../styles/globals.scss'
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux';
+import { store } from '../stores';
 
 import AppLayout from '../components/AppLayout'
 
@@ -17,9 +19,11 @@ declare global {
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AppLayout>
-      <Component {...pageProps} />
-    </AppLayout>
+    <Provider store={store}>
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
+    </Provider>
   )
 }
 

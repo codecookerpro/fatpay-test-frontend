@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { setConnected, setUserAddress } from "../../reducers";
 
 const isBrowser = () => typeof window !== "undefined"
 
@@ -26,17 +28,25 @@ const ConnectButton: React.FC<{
   onChange: (address: string | undefined) => void;
 }> = ({ onChange }) => {
   const [address, setAddress] = useState<string | undefined>();
+  const dispatch = useDispatch();
 
   const connectWallet = async () => {
     const selectedAddress = await readAddress();
-
+    dispatch(setUserAddress(selectedAddress));
+    dispatch(setConnected(true));
     setAddress(selectedAddress);
     onChange(selectedAddress);
   };
 
   useEffect(() => {
-    setAddress(window.ethereum?.selectedAddress);
-  }, []);
+    const work = async () => {
+      const selectedAddress = await readAddress();
+      setAddress(selectedAddress);
+      dispatch(setUserAddress(selectedAddress));
+      dispatch(setConnected(true));
+    }
+    work();
+  }, [dispatch]);
 
   useEffect(() => {
     const eventName = `accountsChanged`;
@@ -48,6 +58,11 @@ const ConnectButton: React.FC<{
 
     const listener = ([selectedAddress]: string[]) => {
       setAddress(selectedAddress);
+      dispatch(setUserAddress(selectedAddress));
+      if(selectedAddress == null)
+        dispatch(setConnected(false));
+      else 
+        dispatch(setConnected(true));
       onChange(selectedAddress);
     };
 
@@ -56,7 +71,7 @@ const ConnectButton: React.FC<{
     return () => {
       window.ethereum.removeListener(eventName, listener);
     };
-  }, [onChange]);
+  }, [onChange, dispatch]);
 
   // if (!isMetaMaskInstalled()) {
   //   return <div>No wallet found. Please install MetaMask.</div>;

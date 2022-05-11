@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react'
 
-import Web3 from 'web3'
-import { Web3Exception } from '../interface/web3'
+import web3 from '../components/Web3';
 import NavBar from '../components/Navbar';
-import Reputation from '../components/Reputation';
+import FatToken from '../components/FatToken';
+import { AbiItem } from 'web3-utils'
+import { FATTOKEN_ADDRESS, FATTOKEN_ABI } from '../abis/FatTokenAbi';
+import { ROUTER_ADDRESS, ROUTER_ABI } from '../abis/RouterAbi';
 
 declare let window: any
 
 const Home = () => {
-  const [web3, setWeb3] = useState<Web3 | null>(null)
-  const [address, setAddress] = useState<string>('')
+
+  const [fatTokenContract, setFatTokenContract]: any = useState();
+  const [router, setRouter]: any = useState();
 
   useEffect(() => {
     if (!window.ethereum) {
@@ -17,21 +20,38 @@ const Home = () => {
       return
     }
 
-    window.ethereum
-      .request({ method: 'eth_requestAccounts' })
-      .then((accounts: string[]) => {
-        setAddress(accounts[0])
-        let w3 = new Web3(window.ethereum)
-        setWeb3(w3)
-      })
-      .catch((err: Web3Exception) => console.log(err.code))
+    const work = async() => {
+      const chainId = 4;
+      if (window.ethereum.networkVersion !== chainId) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: web3.utils.toHex(chainId) }]
+          });
+
+          initializeContracts();
+        } catch (err: any) {
+          console.log(err);
+        }
+      } else {
+        initializeContracts();
+      }
+    }
+    work();
   }, [])
 
+  const initializeContracts = () => {
+    const fatTokenContract = new web3.eth.Contract(FATTOKEN_ABI as AbiItem[], FATTOKEN_ADDRESS);
+    setFatTokenContract(fatTokenContract);
+
+    const router = new web3.eth.Contract(ROUTER_ABI as AbiItem[], ROUTER_ADDRESS);
+    setRouter(router);
+  }
 
   return (
     <div>
-      <NavBar />
-      <Reputation web3={web3} />
+      <NavBar fatTokenContract={fatTokenContract}/>
+      <FatToken fatTokenContract={fatTokenContract} router={router}/>
     </div>
   )
 }
