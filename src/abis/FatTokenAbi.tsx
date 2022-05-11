@@ -1,4 +1,4 @@
-export const FATTOKEN_ADDRESS = '0xdd6B3FDC7c0C0955b3A8e0eD7e258A717c0Ace82';
+export const FATTOKEN_ADDRESS = '0x7Bf62bb7E492F8802eb56c95254c0880E52E9ceE';
 
 export const REWARD_TOKEN_ADDRESS = "0xc778417E063141139Fce010982780140Aa0cD5Ab";
 
@@ -1409,5 +1409,9 @@ export const FATTOKEN_ABI = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ]

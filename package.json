@@ -10,6 +10,7 @@
     "cypress": "cypress open",
     "typechain": "typechain --target=ethers-v5 'src/**/abis/**/*.json' --out-dir src/generated/",
     "clean": "rm -fr src/generated/",
+    "export": "yarn build & next export",
     "test": "echo Test units are not specified yet. && exit 0"
   },
   "dependencies": {
