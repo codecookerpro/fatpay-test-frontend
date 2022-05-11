@@ -14,6 +14,9 @@ const Stats = (props: any) => {
   const premiumRewardFee = useSelector((state: any) => state.main.premiumRewardFee);
   const liquidityFee = useSelector((state: any) => state.main.liquidityFee);
 
+  const [tokenThreshold, setTokenThreshold] = useState("0");
+  const [pair, setPair] = useState("0");
+
   useEffect(() => {
     const work = async () => {
       if(userAddress) {
@@ -42,6 +45,17 @@ const Stats = (props: any) => {
             liquidity = web3.utils.fromWei(liquidity, 'ether');
             dispatch(setLiquidityFee(liquidity)); 
           }
+
+          let threshold = await props.fatTokenContract?.methods?._tokenThreshold().call();
+          if(threshold) {
+            threshold = web3.utils.fromWei(threshold, 'ether');
+            setTokenThreshold(threshold); 
+          }
+
+          let pair = await props.fatTokenContract?.methods?.pair().call();
+          if(pair) {
+            setPair(pair); 
+          }
         } catch(e: any) {
           console.log(e);
         }
@@ -57,6 +71,10 @@ const Stats = (props: any) => {
         {
           connected ?
             <div className="flex flex-col">
+              <div>Pair Address:</div> 
+              <div className="self-end mb-11">{ pair }</div> 
+              <div>Token Threshold:</div> 
+              <div className="self-end mb-11">{ tokenThreshold } FAT20</div> 
               <div>OperationFeeAmount:</div> 
               <div className="self-end mb-10">{ operationFee } FAT20</div> 
               <div>RewardFeeAmount:</div> 

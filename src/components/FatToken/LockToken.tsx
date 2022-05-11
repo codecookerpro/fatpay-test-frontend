@@ -33,6 +33,7 @@ const LockToken = (props: any) => {
         from: userAddress
       });
       alert("Lock Token Success");
+      setLocked(true);
     } catch(e: any) {
       console.log(e);
     }
@@ -44,6 +45,7 @@ const LockToken = (props: any) => {
         from: userAddress
       });
       alert("Unlock Token Success");
+      setLocked(false);
     } catch(e: any) {
       console.log(e);
     }
