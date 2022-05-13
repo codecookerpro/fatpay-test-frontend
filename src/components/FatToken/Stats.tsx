@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
 import web3 from "../Web3";
-import { setOperationFee, setRewardFee, setPremiumRewardFee, setLiquidityFee } from "../../reducers";
+import { setOperationFee, setRewardFee, setPremiumRewardFee, setLiquidityFee, setRewardBalance, setPremiumRewardBalance } from "../../reducers";
 
 const Stats = (props: any) => {
   const dispatch = useDispatch();
@@ -13,9 +13,12 @@ const Stats = (props: any) => {
   const rewardFee = useSelector((state: any) => state.main.rewardFee);
   const premiumRewardFee = useSelector((state: any) => state.main.premiumRewardFee);
   const liquidityFee = useSelector((state: any) => state.main.liquidityFee);
+  const rewardBalance = useSelector((state: any) => state.main.rewardBalance);
+  const premiumRewardBalance = useSelector((state: any) => state.main.premiumRewardBalance);
 
   const [tokenThreshold, setTokenThreshold] = useState("0");
   const [pair, setPair] = useState("0");
+  const [rewardAddress, setRewardAddress] = useState("");
 
   useEffect(() => {
     const work = async () => {
@@ -56,6 +59,22 @@ const Stats = (props: any) => {
           if(pair) {
             setPair(pair); 
           }
+
+          let rewardAddress = await props.fatTokenContract?.methods?._rewardAddress().call();
+          if(rewardAddress != undefined) {
+            setRewardAddress(rewardAddress);
+            let rewardBalance = await web3.eth.getBalance(rewardAddress);
+            rewardBalance = web3.utils.fromWei(rewardBalance, 'ether');
+            dispatch(setRewardBalance(rewardBalance));
+          }
+
+          let premiumRewardAddress = await props.fatTokenContract?.methods?._premiumRewardAddress().call();
+          if(premiumRewardAddress != undefined) {
+            let premiumRewardBalance = await web3.eth.getBalance(premiumRewardAddress);
+            premiumRewardBalance = web3.utils.fromWei(premiumRewardBalance, 'ether');
+            dispatch(setPremiumRewardBalance(premiumRewardBalance));
+          }
+
         } catch(e: any) {
           console.log(e);
         }
@@ -75,6 +94,12 @@ const Stats = (props: any) => {
               <div className="self-end mb-11">{ pair }</div> 
               <div>Token Threshold:</div> 
               <div className="self-end mb-11">{ tokenThreshold } FAT20</div> 
+              <div>Reward Address:</div> 
+              <div className="self-end mb-11">{ rewardAddress }</div> 
+              <div>Reward Disbributor Balance:</div> 
+              <div className="self-end mb-11">{ rewardBalance } ETH</div> 
+              <div>Premium Reward Disbributor Balance:</div> 
+              <div className="self-end mb-11">{ premiumRewardBalance } ETH</div> 
               <div>OperationFeeAmount:</div> 
               <div className="self-end mb-10">{ operationFee } FAT20</div> 
               <div>RewardFeeAmount:</div> 

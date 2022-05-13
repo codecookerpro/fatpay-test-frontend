@@ -13,7 +13,9 @@ const mainSlice = createSlice({
     premiumRewardFee: "0",
     liquidityFee: "0",
     connected: false,
-    approved: false
+    approved: false,
+    rewardBalance: "0",
+    premiumRewardBalance: "0"
 	},
 	reducers: {
 		setTokenBalance: (state: any, action: any) => {
@@ -24,6 +26,8 @@ const mainSlice = createSlice({
 		},
 		setUserAddress: (state: any, action: any) => {
 			state.userAddress = action.payload;
+      if(state.userAddress == null)
+        state.approved = false;
 		},
     setClaimableAmount: (state: any, action: any) => {
       state.claimableAmount = action.payload;
@@ -49,6 +53,12 @@ const mainSlice = createSlice({
     setApproved: (state: any, action: any) => {
       state.approved = action.payload;
     },
+    setRewardBalance: (state: any, action: any) => {
+      state.rewardBalance = action.payload;
+    },
+    setPremiumRewardBalance: (state: any, action: any) => {
+      state.premiumRewardBalance = action.payload;
+    },
 	}
 })
 
@@ -63,7 +73,9 @@ export const {
   setPremiumRewardFee,
   setLiquidityFee,
   setConnected,
-  setApproved
+  setApproved,
+  setRewardBalance,
+  setPremiumRewardBalance
 } = mainSlice.actions
 
 export default mainSlice.reducer

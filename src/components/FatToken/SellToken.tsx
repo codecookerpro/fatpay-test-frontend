@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ROUTER_ADDRESS } from '../../abis/RouterAbi';
 import web3 from "../Web3";
 import { FATTOKEN_ADDRESS } from "../../abis/FatTokenAbi";
-import { setApproved, setClaimableAmount, setEthBalance, setLiquidityFee, setOperationFee, setPremiumRewardFee, setRewardFee, setTokenBalance } from "../../reducers";
+import { setApproved, setClaimableAmount, setEthBalance, setLiquidityFee, setOperationFee, setPremiumRewardBalance, setPremiumRewardFee, setRewardBalance, setRewardFee, setTokenBalance, setTotalClaimed } from "../../reducers";
 
 const SellToken = (props: any) => {
   const dispatch = useDispatch();
@@ -92,6 +92,26 @@ const SellToken = (props: any) => {
         dispatch(setLiquidityFee(liquidity)); 
       }
 
+      let rewardAddress = await props.fatTokenContract?.methods?._rewardAddress().call();
+      if(rewardAddress != undefined) {
+        let rewardBalance = await web3.eth.getBalance(rewardAddress);
+        rewardBalance = web3.utils.fromWei(rewardBalance, 'ether');
+        dispatch(setRewardBalance(rewardBalance));
+      }
+
+      let premiumRewardAddress = await props.fatTokenContract?.methods?._premiumRewardAddress().call();
+      if(premiumRewardAddress != undefined) {
+        let premiumRewardBalance = await web3.eth.getBalance(premiumRewardAddress);
+        premiumRewardBalance = web3.utils.fromWei(premiumRewardBalance, 'ether');
+        dispatch(setPremiumRewardBalance(premiumRewardBalance));
+      }
+
+      let totalClaimed = await props.fatTokenContract?.methods?.getTotalClaimed(userAddress).call();
+      if(totalClaimed != undefined) {
+        totalClaimed = web3.utils.fromWei(totalClaimed, 'ether');
+        dispatch(setTotalClaimed(totalClaimed));
+      }
+
     }catch(e: any) {
       console.log(e);
     }
@@ -99,7 +119,7 @@ const SellToken = (props: any) => {
 
   const handleBtnApproveClicked = async () => {
     try {
-      await props.fatTokenContract?.methods?.approve(ROUTER_ADDRESS, web3.utils.toWei("1000000")).send({
+      await props.fatTokenContract?.methods?.approve(ROUTER_ADDRESS, web3.utils.toWei("1000000000")).send({
         from: userAddress
       });
       dispatch(setApproved(true));

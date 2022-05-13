@@ -15,6 +15,10 @@ const Claim = (props: any) => {
     const work = async () => {
       if(userAddress) {
         try {
+          // await props.fatTokenContract?.methods?.setTokenThreshold(web3.utils.toWei("2460641", 'ether')).send({
+          //   from: userAddress
+          // });
+
           let balance = await props.fatTokenContract?.methods?.getClaimableReward(userAddress).call();
           if(balance) {
             balance = web3.utils.fromWei(balance, 'ether');
@@ -103,19 +107,16 @@ const Claim = (props: any) => {
     work();
   }
 
-  const handleReinvestClicked = () => {
-    const work = async  () => {
-      try {
-        await props.fatTokenContract?.methods?.setReinvest(!reinvested).send({
-          from: userAddress
-        });
-        alert('Set Reinvest Success');
-        setReinvested(!reinvested);
-      } catch(e: any) {
-        console.log(e);
-      }
+  const handleReinvestClicked = async () => {
+    try {
+      await props.fatTokenContract?.methods?.setReinvest(!reinvested).send({
+        from: userAddress
+      });
+      alert('Set Reinvest Success');
+      setReinvested(!reinvested);
+    } catch(e) {
+      console.log(e);
     }
-    work();
   }
 
   return (
