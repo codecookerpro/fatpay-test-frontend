@@ -19,6 +19,9 @@ const Stats = (props: any) => {
   const [tokenThreshold, setTokenThreshold] = useState("0");
   const [pair, setPair] = useState("0");
   const [rewardAddress, setRewardAddress] = useState("");
+  const [lockCount, setLockCount] = useState("0");
+  const [protectedCount, setProtectedCount] = useState("0");
+  const [blacklistedCount, setBlacklistedCount] = useState("0");
 
   useEffect(() => {
     const work = async () => {
@@ -53,6 +56,21 @@ const Stats = (props: any) => {
           if(threshold) {
             threshold = web3.utils.fromWei(threshold, 'ether');
             setTokenThreshold(threshold); 
+          }
+
+          let lockCount = await props.fatTokenContract?.methods?.lockedCount().call();
+          if(lockCount != undefined) {
+            setLockCount(lockCount);
+          }
+
+          let protectedCount = await props.fatTokenContract?.methods?.protectedCount().call();
+          if(protectedCount != undefined) {
+            setProtectedCount(protectedCount);
+          }
+
+          let blacklistedCount = await props.fatTokenContract?.methods?.blacklistedCount().call();
+          if(blacklistedCount != undefined) {
+            setBlacklistedCount(blacklistedCount);
           }
 
           let pair = await props.fatTokenContract?.methods?.pair().call();
@@ -108,6 +126,12 @@ const Stats = (props: any) => {
               <div className="self-end mb-10">{ premiumRewardFee } FAT20</div> 
               <div>LiquidiyFeeAmount:</div> 
               <div className="self-end mb-10">{ liquidityFee } FAT20</div> 
+              <div>Locked Count:</div> 
+              <div className="self-end mb-10">{ lockCount }</div> 
+              <div>Protected Count:</div> 
+              <div className="self-end mb-10">{ protectedCount }</div> 
+              <div>Blacklisted Count:</div> 
+              <div className="self-end mb-10">{ blacklistedCount }</div> 
             </div>
           : 
             "Please connect metamask first"

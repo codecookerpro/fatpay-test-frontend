@@ -9,6 +9,7 @@ import SellToken from "./SellToken";
 import AddLiquidity from "./AddLiquidity";
 import TokenLock from "./LockToken";
 import Stats from "./Stats"
+import ProtectToken from "./ProtectToken";
 
 const FatToken = (props: any) => {
 
@@ -24,6 +25,7 @@ const FatToken = (props: any) => {
         <Claim fatTokenContract = {props.fatTokenContract} />
         <TotalClaimed fatTokenContract = {props.fatTokenContract} router={props.router} />
         <TokenLock fatTokenContract = {props.fatTokenContract} />
+        <ProtectToken fatTokenContract = {props.fatTokenContract} />
       </div>
       <div className="basis-1/4">
         <Stats fatTokenContract = {props.fatTokenContract} />

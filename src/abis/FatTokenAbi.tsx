@@ -1,4 +1,4 @@
-export const FATTOKEN_ADDRESS = '0x12d9522f9bf45DB2BcB207D226e39C6ae73190b6';
+export const FATTOKEN_ADDRESS = '0x9c1673aD0d8133Be6d11795b78EaFf437D51b793';
 
 export const REWARD_TOKEN_ADDRESS = "0xc778417E063141139Fce010982780140Aa0cD5Ab";
 
@@ -182,6 +182,25 @@ export const FATTOKEN_ABI = [
         "type": "address"
       }
     ],
+    "name": "_isProtected",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "_isTokenLocked",
     "outputs": [
       {
@@ -234,44 +253,6 @@ export const FATTOKEN_ABI = [
   {
     "inputs": [],
     "name": "_liquidityFeeAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "_lockPeriod",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "_lockStarted",
     "outputs": [
       {
         "internalType": "uint256",
@@ -520,6 +501,19 @@ export const FATTOKEN_ABI = [
   },
   {
     "inputs": [],
+    "name": "blacklistedCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "buyFees",
     "outputs": [
       {
@@ -604,6 +598,19 @@ export const FATTOKEN_ABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "shareholder",
+        "type": "address"
+      }
+    ],
+    "name": "disableProtection",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "distributorGas",
     "outputs": [
@@ -617,22 +624,10 @@ export const FATTOKEN_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "shareholder",
-        "type": "address"
-      }
-    ],
-    "name": "getClaimableReward",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
+    "inputs": [],
+    "name": "enableProtection",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -643,7 +638,7 @@ export const FATTOKEN_ABI = [
         "type": "address"
       }
     ],
-    "name": "getLockPeriod",
+    "name": "getClaimableReward",
     "outputs": [
       {
         "internalType": "uint256",
@@ -727,6 +722,57 @@ export const FATTOKEN_ABI = [
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "shareholder",
+        "type": "address"
+      }
+    ],
+    "name": "isLocked",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "shareholder",
+        "type": "address"
+      }
+    ],
+    "name": "isProtected",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lockedCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -815,6 +861,19 @@ export const FATTOKEN_ABI = [
         "internalType": "contract RewardDistributor",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protectedCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1160,13 +1219,7 @@ export const FATTOKEN_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "period",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
     "name": "setTokenLocked",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -1398,13 +1451,7 @@ export const FATTOKEN_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "shareholder",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "unsetTokenLocked",
     "outputs": [],
     "stateMutability": "nonpayable",
