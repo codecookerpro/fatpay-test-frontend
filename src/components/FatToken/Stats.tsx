@@ -19,6 +19,7 @@ const Stats = (props: any) => {
   const [tokenThreshold, setTokenThreshold] = useState("0");
   const [pair, setPair] = useState("0");
   const [rewardAddress, setRewardAddress] = useState("");
+  const [premiumRewardAddress, setPremiumRewardAddress] = useState("");
   const [lockCount, setLockCount] = useState("0");
   const [protectedCount, setProtectedCount] = useState("0");
   const [blacklistedCount, setBlacklistedCount] = useState("0");
@@ -41,6 +42,7 @@ const Stats = (props: any) => {
           } 
 
           let premiumReward = await props.fatTokenContract?.methods?._premiumRewardFeeAmount().call();
+          console.log('TIGER', premiumReward);
           if(premiumReward) {
             premiumReward = web3.utils.fromWei(premiumReward, 'ether');
             dispatch(setPremiumRewardFee(premiumReward));
@@ -88,6 +90,7 @@ const Stats = (props: any) => {
 
           let premiumRewardAddress = await props.fatTokenContract?.methods?._premiumRewardAddress().call();
           if(premiumRewardAddress != undefined) {
+            setPremiumRewardAddress(premiumRewardAddress);
             let premiumRewardBalance = await web3.eth.getBalance(premiumRewardAddress);
             premiumRewardBalance = web3.utils.fromWei(premiumRewardBalance, 'ether');
             dispatch(setPremiumRewardBalance(premiumRewardBalance));
@@ -114,6 +117,8 @@ const Stats = (props: any) => {
               <div className="self-end mb-11">{ tokenThreshold } FAT20</div> 
               <div>Reward Address:</div> 
               <div className="self-end mb-11">{ rewardAddress }</div> 
+              <div>Premium Reward Address:</div> 
+              <div className="self-end mb-11">{ premiumRewardAddress }</div> 
               <div>Reward Disbributor Balance:</div> 
               <div className="self-end mb-11">{ rewardBalance } ETH</div> 
               <div>Premium Reward Disbributor Balance:</div> 
