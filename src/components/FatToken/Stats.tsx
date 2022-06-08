@@ -9,10 +9,6 @@ const Stats = (props: any) => {
   const userAddress = useSelector((state: any) => state.main.userAddress);
   const connected = useSelector((state: any) => state.main.connected);
 
-  const operationFee = useSelector((state: any) => state.main.operationFee);
-  const rewardFee = useSelector((state: any) => state.main.rewardFee);
-  const premiumRewardFee = useSelector((state: any) => state.main.premiumRewardFee);
-  const liquidityFee = useSelector((state: any) => state.main.liquidityFee);
   const rewardBalance = useSelector((state: any) => state.main.rewardBalance);
   const premiumRewardBalance = useSelector((state: any) => state.main.premiumRewardBalance);
 
@@ -29,31 +25,7 @@ const Stats = (props: any) => {
       if(userAddress) {
         
         try {
-          let operation = await props.fatTokenContract?.methods?._operationFeeAmount().call();
-          if(operation) {
-            operation = web3.utils.fromWei(operation, 'ether');
-            dispatch(setOperationFee(operation));
-          }
-
-          let reward = await props.fatTokenContract?.methods?._rewardFeeAmount().call();
-          if(reward) {
-            reward = web3.utils.fromWei(reward, 'ether');
-            dispatch(setRewardFee(reward));
-          } 
-
-          let premiumReward = await props.fatTokenContract?.methods?._premiumRewardFeeAmount().call();
-          console.log('TIGER', premiumReward);
-          if(premiumReward) {
-            premiumReward = web3.utils.fromWei(premiumReward, 'ether');
-            dispatch(setPremiumRewardFee(premiumReward));
-          }
-
-          let liquidity = await props.fatTokenContract?.methods?._liquidityFeeAmount().call();
-          if(liquidity) {
-            liquidity = web3.utils.fromWei(liquidity, 'ether');
-            dispatch(setLiquidityFee(liquidity)); 
-          }
-
+          
           let threshold = await props.fatTokenContract?.methods?._tokenThreshold().call();
           if(threshold) {
             threshold = web3.utils.fromWei(threshold, 'ether');
@@ -123,14 +95,6 @@ const Stats = (props: any) => {
               <div className="self-end mb-11">{ rewardBalance } ETH</div> 
               <div>Premium Reward Disbributor Balance:</div> 
               <div className="self-end mb-11">{ premiumRewardBalance } ETH</div> 
-              <div>OperationFeeAmount:</div> 
-              <div className="self-end mb-10">{ operationFee } FAT20</div> 
-              <div>RewardFeeAmount:</div> 
-              <div className="self-end mb-10">{ rewardFee } FAT20</div> 
-              <div>PremiumRewardFeeAmount:</div> 
-              <div className="self-end mb-10">{ premiumRewardFee } FAT20</div> 
-              <div>LiquidiyFeeAmount:</div> 
-              <div className="self-end mb-10">{ liquidityFee } FAT20</div> 
               <div>Locked Count:</div> 
               <div className="self-end mb-10">{ lockCount }</div> 
               <div>Protected Count:</div> 

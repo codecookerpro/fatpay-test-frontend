@@ -48,30 +48,6 @@ const BuyToken = (props: any) => {
         ethBalance = web3.utils.fromWei(ethBalance, 'ether');
         dispatch(setEthBalance(ethBalance));
       }
-      
-      let operation = await props.fatTokenContract?.methods?._operationFeeAmount().call();
-      if(operation !== undefined) {
-        operation = web3.utils.fromWei(operation, 'ether');
-        dispatch(setOperationFee(operation));
-      }
-
-      let reward = await props.fatTokenContract?.methods?._rewardFeeAmount().call();
-      if(reward !== undefined) {
-        reward = web3.utils.fromWei(reward, 'ether');
-        dispatch(setRewardFee(reward));
-      } 
-
-      let premiumReward = await props.fatTokenContract?.methods?._premiumRewardFeeAmount().call();
-      if(premiumReward !== undefined) {
-        premiumReward = web3.utils.fromWei(premiumReward, 'ether');
-        dispatch(setPremiumRewardFee(premiumReward));
-      }
-
-      let liquidity = await props.fatTokenContract?.methods?._liquidityFeeAmount().call();
-      if(liquidity !== undefined) {
-        liquidity = web3.utils.fromWei(liquidity, 'ether');
-        dispatch(setLiquidityFee(liquidity)); 
-      }
 
     }catch(e: any) {
       console.log(e);
