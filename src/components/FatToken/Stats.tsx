@@ -13,6 +13,11 @@ const Stats = (props: any) => {
   const premiumRewardBalance = useSelector((state: any) => state.main.premiumRewardBalance);
 
   const [tokenThreshold, setTokenThreshold] = useState("0");
+  const [operationFee, setOperationFee] = useState("0");
+  const [rewardFee, setRewardFee] = useState("0");
+  const [premiumRewardFee, setPremiumRewardFee] = useState("0");
+  const [liquidityFee, setLiquidityFee] = useState("0");
+
   const [pair, setPair] = useState("0");
   const [rewardAddress, setRewardAddress] = useState("");
   const [premiumRewardAddress, setPremiumRewardAddress] = useState("");
@@ -25,7 +30,30 @@ const Stats = (props: any) => {
       if(userAddress) {
         
         try {
-          
+          let operationFee = await props.fatTokenContract?.methods?._operationFeeAmount().call();
+          if(operationFee) {
+            operationFee = web3.utils.fromWei(operationFee, 'ether');
+            setOperationFee(operationFee); 
+          }
+
+          let rewardFee = await props.fatTokenContract?.methods?._rewardFeeAmount().call();
+          if(rewardFee) {
+            rewardFee = web3.utils.fromWei(rewardFee, 'ether');
+            setRewardFee(rewardFee); 
+          }
+
+          let premiumRewardFee = await props.fatTokenContract?.methods?._premiumRewardFeeAmount().call();
+          if(premiumRewardFee) {
+            premiumRewardFee = web3.utils.fromWei(premiumRewardFee, 'ether');
+            setPremiumRewardFee(premiumRewardFee); 
+          }
+
+          let liquidityFee = await props.fatTokenContract?.methods?._liquidityFeeAmount().call();
+          if(liquidityFee) {
+            liquidityFee = web3.utils.fromWei(liquidityFee, 'ether');
+            setLiquidityFee(liquidityFee); 
+          }
+
           let threshold = await props.fatTokenContract?.methods?._tokenThreshold().call();
           if(threshold) {
             threshold = web3.utils.fromWei(threshold, 'ether');
@@ -95,6 +123,14 @@ const Stats = (props: any) => {
               <div className="self-end mb-11">{ rewardBalance } ETH</div> 
               <div>Premium Reward Disbributor Balance:</div> 
               <div className="self-end mb-11">{ premiumRewardBalance } ETH</div> 
+              <div>Operation Fee:</div> 
+              <div className="self-end mb-10">{ operationFee }</div> 
+              <div>Reward Fee:</div> 
+              <div className="self-end mb-10">{ rewardFee }</div> 
+              <div>Premium Reward Fee:</div> 
+              <div className="self-end mb-10">{ premiumRewardFee }</div> 
+              <div>Liquidity Fee:</div> 
+              <div className="self-end mb-10">{ liquidityFee }</div> 
               <div>Locked Count:</div> 
               <div className="self-end mb-10">{ lockCount }</div> 
               <div>Protected Count:</div> 

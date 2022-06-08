@@ -1,4 +1,4 @@
-export const FATTOKEN_ADDRESS = '0xcc107F2cF98611EF22C5DB702B7cf04f72F7986a';
+export const FATTOKEN_ADDRESS = '0x2b83a57C0E7B6d83c2966a9695785EcF1367dE06';
 
 export const REWARD_TOKEN_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
 
@@ -252,6 +252,32 @@ export const FATTOKEN_ABI = [
   },
   {
     "inputs": [],
+    "name": "_liquidityFeeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_operationFeeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "_premiumRewardAddress",
     "outputs": [
       {
@@ -265,12 +291,38 @@ export const FATTOKEN_ABI = [
   },
   {
     "inputs": [],
+    "name": "_premiumRewardFeeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "_rewardAddress",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_rewardFeeAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -300,6 +352,58 @@ export const FATTOKEN_ABI = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "liquidityFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "addLiquidityFeeAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "operationFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "addOperationFeeAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "premiumRewardFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "addPremiumRewardFeeAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "rewardFee",
+        "type": "uint256"
+      }
+    ],
+    "name": "addRewardFeeAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -584,6 +688,19 @@ export const FATTOKEN_ABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "governToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -757,32 +874,6 @@ export const FATTOKEN_ABI = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "proxy",
-    "outputs": [
-      {
-        "internalType": "contract RewardDistributorProxy",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "proxyAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1198,6 +1289,19 @@ export const FATTOKEN_ABI = [
     "name": "setTxLimitExempt",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "swapEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
