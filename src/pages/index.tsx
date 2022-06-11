@@ -21,7 +21,7 @@ const Home = () => {
     }
 
     const work = async() => {
-      const chainId = 4;
+      const chainId = 97;
       if (window.ethereum.networkVersion !== chainId) {
         try {
           await window.ethereum.request({
